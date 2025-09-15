@@ -1,395 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kuper Laundry Products</title>
   <style>
-    :root{
-      --brand:#0073e6;
-      --surface:#fff;
-      --muted:#555;
-      --maxw:1000px;
-      --radius:8px;
-    }
-    *{box-sizing:border-box}
-    body{
-      font-family: Arial, Helvetica, sans-serif;
-      margin:0;
-      background:#f4f4f4;
-      color:#111;
-      -webkit-font-smoothing:antialiased;
-    }
-    header{
-      background:var(--brand);
-      color:white;
-      padding:18px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-    .brand h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing:0.4px;
-    }
-    nav{
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
-    nav a{
-      color:white;
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
-    }
-    .cart-link{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-    }
-    .cart-badge{
-      position:absolute;
-      top:-6px;
-      right:-8px;
-      background:#ff3b30;
-      color:white;
-      font-size:12px;
-      min-width:18px;
-      height:18px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:0 5px;
-      border-radius:999px;
-      box-shadow:0 1px 3px rgba(0,0,0,0.2);
-    }
-
-    .container{
-      max-width:var(--maxw);
-      margin:20px auto;
-      padding:0 18px 60px;
-    }
-
-    /* Product grid */
-    .product-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-      gap:20px;
-      margin-top:12px;
-    }
-    .product{
-      background:var(--surface);
-      padding:14px;
-      border-radius:var(--radius);
-      box-shadow:0 2px 6px rgba(0,0,0,0.06);
-      text-align:center;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .product img{
-      max-width:100%;
-      border-radius:6px;
-      height:150px;
-      object-fit:cover;
-    }
-    .product h3{margin:0;font-size:16px;}
-    .product p{margin:0;color:var(--muted);font-size:14px;}
-    .price{font-weight:700;margin-top:8px}
-
-    .product button{
-      margin-top:auto;
-      background:var(--brand);
-      color:white;border:none;padding:10px 12px;border-radius:6px;
-      cursor:pointer;font-weight:700;
-    }
-
-    /* Cart section */
-    #cart{
-      margin-top:28px;
-      background:var(--surface);
-      padding:18px;
-      border-radius:var(--radius);
-      box-shadow:0 2px 6px rgba(0,0,0,0.06);
-    }
-    .cart-empty{
-      padding:34px 18px;text-align:center;color:var(--muted);
-    }
-    table.cart-table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:14px;
-    }
-    table.cart-table th, table.cart-table td{
-      padding:10px 8px;
-      border-bottom:1px solid #eee;
-      text-align:left;
-      vertical-align:middle;
-    }
-    .qty-controls{display:flex;gap:6px;align-items:center}
-    .qty-controls button{
-      width:30px;height:30px;border-radius:6px;border:1px solid #ddd;background:white;cursor:pointer;
-    }
-    .remove-btn{background:#fff;border:1px solid #eee;padding:6px 8px;border-radius:6px;cursor:pointer}
-
-    .cart-summary{
-      display:flex;
-      justify-content:flex-end;
-      gap:18px;
-      margin-top:12px;
-      align-items:center;
-    }
-    .totals{
-      text-align:right;
-    }
-    .checkout-btn{
-      background:#111;color:white;border:none;padding:10px 16px;border-radius:6px;font-weight:700;cursor:pointer;
-    }
-
-    /* Contact */
-    #contact{margin-top:26px;font-size:15px}
-
-    footer{
-      background:#333;color:white;padding:18px;text-align:center;margin-top:36px;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width:640px){
-      header{flex-direction:column;align-items:flex-start;gap:10px}
-      .brand h1{font-size:18px}
-      .product img{height:140px}
-      .cart-summary{flex-direction:column;align-items:stretch}
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    header { background-color: #0073e6; color: white; padding: 20px 0; text-align: center; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 20px; }
+    .product { background-color: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+    .product img { max-width: 100%; border-radius: 8px; }
+    .product h3 { margin: 10px 0; }
+    .product p { color: #555; }
+    .product button { background-color: #0073e6; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+    footer { background-color: #333; color: white; padding: 20px 0; text-align: center; margin-top: 40px; }
   </style>
 </head>
 <body>
-
   <header>
-    <div class="brand">
-      <!-- Simple cart icon (SVG) for clarity -->
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M3 3h2l.4 2M7 13h10l3-8H6.4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="10" cy="20" r="1.6" fill="white"/>
-        <circle cx="18" cy="20" r="1.6" fill="white"/>
-      </svg>
-      <h1>Kuper Laundry Products</h1>
-    </div>
-
-    <nav aria-label="Main navigation">
-      <a href="#products">Products</a>
-      <a href="#contact">Contact</a>
-      <a href="#cart" class="cart-link" id="cart-anchor" aria-label="View cart">
-        Cart
-        <span class="cart-badge" id="cart-count" aria-hidden="true">0</span>
-      </a>
+    <h1>Kuper Laundry Products</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
-  <main class="container">
-    <section id="products" aria-labelledby="products-heading">
-      <h2 id="products-heading">Our Products</h2>
-
+  <div class="container">
+    <section id="products">
+      <h2>Our Products</h2>
       <div class="product-grid">
-
-        <!-- Product 1 -->
-        <article class="product" data-id="detergent-1" data-name="Laundry Detergent" data-price="9.99" role="article" aria-label="Laundry Detergent">
-          <img src="images/arrangement-clothes-basket-washing-room.jpg" alt="Bottle of laundry detergent">
+        <div class="product">
+          <img src="https://via.placeholder.com/150" alt="Laundry Detergent">
           <h3>Laundry Detergent</h3>
           <p>High-quality detergent for all fabrics.</p>
-          <div class="price">$9.99</div>
-          <button type="button" class="add-btn">Add to Cart</button>
-        </article>
-
-        <!-- Product 2 -->
-        <article class="product" data-id="softener-1" data-name="Fabric Softener" data-price="6.49" role="article" aria-label="Fabric Softener">
-          <img src="images/3899440.jpg" alt="Bottle of fabric softener">
-          <h3>Fabric Softener</h3>
-          <p>Keep your clothes soft and fresh.</p>
-          <div class="price">$6.49</div>
-          <button type="button" class="add-btn">Add to Cart</button>
-        </article>
-
-        <!-- Product 3 -->
-        <article class="product" data-id="pods-1" data-name="Laundry Pods" data-price="12.00" role="article" aria-label="Laundry Pods">
-          <img src="images/close-up-woman-holding-washing-tablets.jpg" alt="Box of laundry pods">
-          <h3>Laundry Pods</h3>
-          <p>Convenient pods for easy laundry.</p>
-          <div class="price">$12.00</div>
-          <button type="button" class="add-btn">Add to Cart</button>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Cart Section -->
-    <section id="cart" aria-labelledby="cart-heading">
-      <h2 id="cart-heading" style="margin-top:18px">Cart</h2>
-      <div id="cart-container">
-        <!-- JS will render cart table here -->
-        <div class="cart-empty" id="cart-empty">Your cart is empty. Add something from the Products section.</div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Email: s.kupershteyn@gmail.com</p>
-      <p>Phone: (917) 912-8810</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Kuper Laundry LLC</p>
-  </footer>
-
-  <script>
-    // Simple client-side cart (localStorage). No backend, no payments.
-    (function(){
-      const CART_KEY = 'kuper_cart_v1';
-
-      function loadCart(){
-        try{
-          const raw = localStorage.getItem(CART_KEY);
-          return raw ? JSON.parse(raw) : [];
-        } catch(e){ return []; }
-      }
-      function saveCart(items){
-        localStorage.setItem(CART_KEY, JSON.stringify(items));
-        renderCart();
-      }
-
-      function findItem(items, id){ return items.find(i=>i.id===id); }
-
-      function addToCart(product){
-        let items = loadCart();
-        const existing = findItem(items, product.id);
-        if(existing) existing.qty += 1;
-        else items.push({...product, qty:1});
-        saveCart(items);
-      }
-
-      function changeQty(id, newQty){
-        let items = loadCart();
-        items = items.map(it=>{
-          if(it.id===id) it.qty = Math.max(0, newQty);
-          return it;
-        }).filter(it=>it.qty>0);
-        saveCart(items);
-      }
-
-      function removeItem(id){
-        let items = loadCart().filter(i=>i.id!==id);
-        saveCart(items);
-      }
-
-      function clearCart(){
-        localStorage.removeItem(CART_KEY);
-        renderCart();
-      }
-
-      function formatMoney(n){ return '$' + n.toFixed(2); }
-
-      // Render cart UI
-      function renderCart(){
-        const container = document.getElementById('cart-container');
-        const items = loadCart();
-        const countEl = document.getElementById('cart-count');
-
-        const totalItems = items.reduce((s,i)=>s+i.qty,0);
-        countEl.textContent = totalItems;
-
-        if(items.length === 0){
-          container.innerHTML = '<div class="cart-empty" id="cart-empty">Your cart is empty. Add something from the Products section.</div>';
-          return;
-        }
-
-        let subtotal = 0;
-        let rows = items.map(item=>{
-          const line = item.price * item.qty;
-          subtotal += line;
-          return `
-            <tr data-id="${item.id}">
-              <td style="width:45%"><strong>${escapeHtml(item.name)}</strong></td>
-              <td style="width:15%">${formatMoney(item.price)}</td>
-              <td style="width:20%">
-                <div class="qty-controls" role="group" aria-label="Quantity controls">
-                  <button onclick="window.kuperCartUpdateQty('${item.id}', ${item.qty - 1})" aria-label="Decrease quantity">−</button>
-                  <span aria-live="polite" style="min-width:28px;text-align:center;display:inline-block">${item.qty}</span>
-                  <button onclick="window.kuperCartUpdateQty('${item.id}', ${item.qty + 1})" aria-label="Increase quantity">+</button>
-                </div>
-              </td>
-              <td style="width:15%">${formatMoney(line)}</td>
-              <td style="width:5%"><button class="remove-btn" onclick="window.kuperCartRemove('${item.id}')" aria-label="Remove item">Remove</button></td>
-            </tr>
-          `;
-        }).join('');
-
-        const html = `
-          <div style="overflow:auto">
-            <table class="cart-table" role="table" aria-label="Shopping cart">
-              <thead>
-                <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
-              </thead>
-              <tbody>
-                ${rows}
-              </tbody>
-            </table>
-          </div>
-          <div class="cart-summary" style="margin-top:12px">
-            <div class="totals">
-              <div>Subtotal: <strong>${formatMoney(subtotal)}</strong></div>
-              <div style="font-size:13px;color:${'#666'}">Taxes & shipping calculated at checkout</div>
-            </div>
-            <div>
-              <button class="checkout-btn" onclick="alert('This is a demo checkout. Integrate a payment provider to accept payments.')">Checkout</button>
-              <button class="remove-btn" style="margin-left:8px" onclick="window.kuperCartClear()">Clear</button>
-            </div>
-          </div>
-        `;
-        container.innerHTML = html;
-      }
-
-      // Safe HTML escape for product names
-      function escapeHtml(str){
-        return String(str).replace(/[&<>"]/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]); });
-      }
-
-      // Wire up add buttons
-      document.querySelectorAll('.product').forEach(prod=>{
-        const btn = prod.querySelector('.add-btn');
-        btn.addEventListener('click', ()=>{
-          const product = {
-            id: prod.dataset.id,
-            name: prod.dataset.name,
-            price: parseFloat(prod.dataset.price)
-          };
-          addToCart(product);
-          // Brief visual feedback
-          btn.textContent = 'Added ✓';
-          btn.disabled = true;
-          setTimeout(()=>{ btn.textContent = 'Add to Cart'; btn.disabled = false; }, 900);
-        });
-      });
-
-      // expose small API for inline onclick handlers (quick and simple)
-      window.kuperCartRemove = function(id){ removeItem(id); };
-      window.kuperCartUpdateQty = function(id, qty){ changeQty(id, qty); };
-      window.kuperCartClear = function(){ if(confirm('Clear cart?')) clearCart(); };
-
-      // initialize
-      renderCart();
-
-    })();
-  </script>
-
-</body>
-</html>
+          <button>Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="https://via.placeholder.com/150" alt="Fabric Softener">
+          <h3>Fabri
