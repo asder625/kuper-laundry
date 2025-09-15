@@ -8,49 +8,144 @@
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
     header { background-color: #0073e6; color: white; padding: 20px 0; text-align: center; }
     nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    .container { max-width: 800px; margin: 20px auto; padding: 0 20px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
     th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+    .qty-controls { display: flex; align-items: center; gap: 5px; }
+    .qty-controls button { width: 28px; height: 28px; border-radius: 5px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    .remove-btn { background: #ff3b30; color: white; border: none; padding: 5px 8px; border-radius: 5px; cursor: pointer; }
     .checkout { margin-top: 20px; text-align: right; }
-    .checkout a { background: #0073e6; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; }
+    .checkout button { background: #0073e6; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    .cart-empty { text-align: center; padding: 40px 0; color: #555; }
     footer { background-color: #333; color: white; padding: 20px 0; text-align: center; margin-top: 40px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Your Shopping Cart</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="cart.html">Cart</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
 
-  <div class="container">
-    <h2>Items in Cart</h2>
-    <table>
-      <tr>
-        <th>Product</th>
-        <th>Price</th>
-      </tr>
-      <tr>
-        <td>Laundry Detergent</td>
-        <td>$10.00</td>
-      </tr>
-      <tr>
-        <td>Fabric Softener</td>
-        <td>$8.00</td>
-      </tr>
-    </table>
+<header>
+  <h1>Your Shopping Cart</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-    <div class="checkout">
-      <p><strong>Total:</strong> $18.00</p>
-      <a href="checkout.html">Proceed to Checkout</a>
-    </div>
+<div class="container">
+  <h2>Items in Cart</h2>
+  <div id="cart-container">
+    <div class="cart-empty">Your cart is empty.</div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Kuper Laundry LLC</p>
-  </footer>
+  <div class="checkout" id="checkout-container" style="display:none;">
+    <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
+    <button onclick="alert('This is a demo checkout. Integrate a payment provider to accept payments.')">Proceed to Checkout</button>
+    <button style="margin-left:8px;background:#aaa;" onclick="clearCart()">Clear Cart</button>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Kuper Laundry LLC</p>
+</footer>
+
+<script>
+  const CART_KEY = 'kuper_cart_v1';
+
+  function loadCart() {
+    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveCart(items) {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    renderCart();
+  }
+
+  function addToCart(item) {
+    let items = loadCart();
+    const existing = items.find(i => i.id === item.id);
+    if(existing) existing.qty += 1;
+    else items.push({...item, qty:1});
+    saveCart(items);
+  }
+
+  function updateQty(id, qty) {
+    let items = loadCart().map(i => {
+      if(i.id === id) i.qty = Math.max(0, qty);
+      return i;
+    }).filter(i => i.qty > 0);
+    saveCart(items);
+  }
+
+  function removeItem(id) {
+    let items = loadCart().filter(i => i.id !== id);
+    saveCart(items);
+  }
+
+  function clearCart() {
+    if(confirm('Clear the cart?')) {
+      localStorage.removeItem(CART_KEY);
+      renderCart();
+    }
+  }
+
+  function formatMoney(n){ return n.toFixed(2); }
+
+  function renderCart() {
+    const container = document.getElementById('cart-container');
+    const checkout = document.getElementById('checkout-container');
+    const items = loadCart();
+
+    if(items.length === 0){
+      container.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+      checkout.style.display = 'none';
+      return;
+    }
+
+    let subtotal = 0;
+    let rows = items.map(item => {
+      const line = item.price * item.qty;
+      subtotal += line;
+      return `
+        <tr>
+          <td>${item.name}</td>
+          <td>$${formatMoney(item.price)}</td>
+          <td>
+            <div class="qty-controls">
+              <button onclick="updateQty('${item.id}', ${item.qty - 1})">−</button>
+              <span>${item.qty}</span>
+              <button onclick="updateQty('${item.id}', ${item.qty + 1})">+</button>
+            </div>
+          </td>
+          <td>$${formatMoney(line)}</td>
+          <td><button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button></td>
+        </tr>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <table>
+        <thead>
+          <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    `;
+
+    document.getElementById('cart-total').textContent = formatMoney(subtotal);
+    checkout.style.display = 'block';
+  }
+
+  // Initialize
+  renderCart();
+
+  // Expose functions for inline buttons
+  window.updateQty = updateQty;
+  window.removeItem = removeItem;
+  window.clearCart = clearCart;
+</script>
+
 </body>
 </html>
